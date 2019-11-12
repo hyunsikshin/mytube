@@ -5,9 +5,9 @@ Cloning Youtube with Valilla and NodeJS
 ## Pages:
 
 - [ ] Home
-- [ ] Join
-- [ ] Login
-- [ ] Search
+- [x] Join
+- [x] Login
+- [x] Search
 - [ ] User Detail
 - [ ] Edit Profile
 - [ ] Change Password
