@@ -1,7 +1,11 @@
-import routes from './routes';
+import routes from "./routes";
 
 export const localsMiddleWare = (req, res, next) => {
-  res.locals.siteName = 'MyTube';
+  res.locals.siteName = "MyTube";
   res.locals.routes = routes;
+  res.locals.user = {
+    isAuthenticated: true,
+    id: 1
+  };
   next();
 };
