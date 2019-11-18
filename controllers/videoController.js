@@ -3,7 +3,7 @@ import Video from "../models/Video";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ _id: -1 });
     res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
     console.log(error);
@@ -14,8 +14,8 @@ export const home = async (req, res) => {
 export const search = (req, res) => {
   const {
     query: { term: searchingBy }
-  } = req; //같은 내용 const searchingBy = req.query.term;
-  res.render("search", { pageTitle: "Search", searchingBy, videos }); //searchingBy : searchingBy => searchingBy
+  } = req; // 같은 내용 const searchingBy = req.query.term;
+  res.render("search", { pageTitle: "Search", searchingBy }); //  searchingBy : searchingBy => searchingBy
 };
 
 export const video = (req, res) => res.render("video", { pageTitle: "Video" });
@@ -67,7 +67,7 @@ export const getEditVideo = async (req, res) => {
   }
 };
 
-//Update
+// Update
 export const postEditVideo = async (req, res) => {
   const {
     params: { id },
