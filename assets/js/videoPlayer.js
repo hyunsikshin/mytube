@@ -29,20 +29,6 @@ function handleVolumeClick() {
   }
 }
 
-function exitFullScreen() {
-  fullScrnBtn.innerHTML = '<i class="fas fa-expand"></i>';
-  fullScrnBtn.addEventListener("click", goFullScreen);
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
-}
-
 function goFullScreen() {
   if (videoContainer.requestFullscreen) {
     videoContainer.requestFullscreen();
@@ -55,7 +41,22 @@ function goFullScreen() {
   }
   fullScrnBtn.innerHTML = '<i class="fas fa-compress"></i>';
   fullScrnBtn.removeEventListener("click", goFullScreen);
+  // eslint-disable-next-line no-use-before-define
   fullScrnBtn.addEventListener("click", exitFullScreen);
+}
+
+function exitFullScreen() {
+  fullScrnBtn.innerHTML = '<i class="fas fa-expand"></i>';
+  fullScrnBtn.addEventListener("click", goFullScreen);
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
 }
 
 const formatDate = seconds => {
