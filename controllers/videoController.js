@@ -58,7 +58,11 @@ export const videoDetail = async (req, res) => {
   } = req;
 
   try {
+    // eslint-disable-next-line no-shadow
     const video = await Video.findById(id).populate("creator");
+    const vieo = await Video.findById(id);
+    vieo.views += 1; // Add view count
+    vieo.save();
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (err) {
     res.redirect(routes.home);
@@ -71,6 +75,7 @@ export const getEditVideo = async (req, res) => {
     params: { id }
   } = req;
   try {
+    // eslint-disable-next-line no-shadow
     const video = await Video.findById(id);
     if (video.creator !== req.user.id) {
       throw Error();
@@ -114,4 +119,18 @@ export const deleteVideo = async (req, res) => {
     console.log(err);
   }
   res.redirect(routes.home);
+};
+
+export const postAddComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { comment }
+  } = req;
+
+  try {
+  } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
 };
