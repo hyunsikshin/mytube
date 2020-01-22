@@ -1,5 +1,6 @@
 import routes from "../routes";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
   try {
@@ -59,10 +60,11 @@ export const videoDetail = async (req, res) => {
 
   try {
     // eslint-disable-next-line no-shadow
-    const video = await Video.findById(id).populate("creator");
-    const vieo = await Video.findById(id);
-    vieo.views += 1; // Add view count
-    vieo.save();
+    const video = await Video.findById(id)
+      .populate("creator")
+      .populate("comments");
+    video.views += 1; // Add view count
+    video.save();
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (err) {
     res.redirect(routes.home);
@@ -122,13 +124,26 @@ export const deleteVideo = async (req, res) => {
 };
 
 export const postAddComment = async (req, res) => {
+  console.log("here");
   const {
     params: { id },
-    body: { comment }
+    body: { comment },
+    user
   } = req;
 
   try {
+    console.log(`${comment} 왔슴`);
+    // eslint-disable-next-line no-shadow
+    const video = await Video.findById(id);
+    const newComment = await Comment.create({
+      text: comment,
+      creator: user.id
+    });
+    // eslint-disable-next-line no-underscore-dangle
+    video.comment.push(newComment.id);
+    video.save();
   } catch (error) {
+    console.log(error);
     res.status(400);
   } finally {
     res.end();
